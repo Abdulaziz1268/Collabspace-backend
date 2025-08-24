@@ -31,12 +31,27 @@ export const login = async (req, res) => {
 export const register = async (req, res) => {
   try {
     const { username, email, password } = req.body
+
+    if (!username || !email || !password) {
+      return res.status(400).json({ message: "All fields are required." })
+    }
+
+    const existingUser = await User.findOne({ email })
+    if (existingUser) {
+      return res.status(400).json({ message: "Email already in use." })
+    }
+
+    const existingUsername = await User.findOne({ username })
+    if (existingUsername) {
+      return res.status(400).json({ message: "Username already taken." })
+    }
+
     const hashed = await bcrypt.hash(password, 10)
     const user = new User({ username, email, password: hashed })
     await user.save()
     res.json({ message: "User registered ✅" })
   } catch (err) {
-    res.status(500).json({ error: err.message })
+    res.status(500).json({ message: err.message })
   }
 }
 
@@ -69,9 +84,9 @@ export const sendEmail = async (req, res) => {
   }
   try {
     await transporter.sendMail(mailOptions)
-    res.json({ message: "Verification code sent to email" })
+    res.json({ message: "Verification code sent to email", status: "sent" })
   } catch (error) {
-    res.status(500).json({ message: error.message })
+    res.status(500).json({ message: error.message, status: "not sent" })
   }
 }
 
@@ -80,17 +95,18 @@ export const verifyEmail = (req, res) => {
   const record = verificationCodes.get(email)
 
   if (!record)
-    return res
-      .status(404)
-      .json({ message: "No code found for this email", verified: false })
+    return res.json({
+      message: "No code found for this email",
+      verified: false,
+    })
 
   if (Date.now() > record.expiresAt) {
     verificationCodes.delete(email)
-    return res.status(410).json({ message: "Code expired", verified: false })
+    return res.json({ message: "Code expired", verified: false })
   }
 
   if (code !== record.code)
-    return res.status(401).json({ message: "Invalid Code", verified: false })
+    return res.json({ message: "Invalid Code", verified: false })
 
   verificationCodes.delete(email)
   res.json({ message: "Verified successfully", verified: true })
