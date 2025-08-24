@@ -18,8 +18,7 @@
 
 ## 🔮 Next Steps
 
-- protected routes
-- JWT Middleware
+- Basic Auth implementation
 
 ## 💡 Reflections
 
