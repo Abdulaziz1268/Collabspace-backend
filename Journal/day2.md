@@ -1,4 +1,4 @@
-# Day X Journal
+# Day 2 Journal
 
 ## 🎯 Goals for Today
 
