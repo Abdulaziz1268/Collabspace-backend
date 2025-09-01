@@ -59,6 +59,11 @@ const verificationCodes = new Map()
 
 export const sendEmail = async (req, res) => {
   const { email } = req.body
+
+  const userExist = await User.findOne({ email })
+  if (userExist)
+    return res.status(409).json({ message: "The email is already in use." })
+
   const code = Math.floor(100000 + Math.random() * 900000).toString()
   const expiresAt = Date.now() + 5 * 60 * 1000
 
@@ -73,6 +78,7 @@ export const sendEmail = async (req, res) => {
   })
 
   const mailOptions = {
+    from: '"Collabspace"<no-reply@gmail.com',
     to: email,
     subject: `Your Code - ${code}`,
     html: `
