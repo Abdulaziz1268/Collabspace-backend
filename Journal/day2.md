@@ -12,6 +12,7 @@
   - verificat endpoints
     - sendEmail endpoint
     - verifyEmail endpoint
+- Created user model with bcryptjs & JWT
 
 ## 🐞 Issues I Faced
 
