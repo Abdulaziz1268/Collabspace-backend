@@ -4,6 +4,7 @@ import express from "express"
 
 import authRoutes from "./Routes/auth.js"
 import userRoutes from "./Routes/user.js"
+import postRoutes from "./Routes/Post.js"
 
 import connectDB from "./Config/db.js"
 
@@ -16,6 +17,7 @@ app.use(cors())
 
 app.use("/api/auth", authRoutes)
 app.use("/api/user", userRoutes)
+app.use("/api/post", postRoutes)
 
 app.get("/", (req, res) => {
   res.status(200).json({ status: "server is now live!" })
