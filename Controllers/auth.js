@@ -47,7 +47,14 @@ export const register = async (req, res) => {
     }
 
     const hashed = await bcrypt.hash(password, 10)
-    const user = new User({ username, email, password: hashed })
+    const user = new User({
+      username,
+      email,
+      password: hashed,
+      imageUrl: req.file
+        ? `/uploads/${req.file.filename}`
+        : "/uploads/placeholder.jpg",
+    })
     await user.save()
     res.json({ message: "User registered ✅" })
   } catch (err) {

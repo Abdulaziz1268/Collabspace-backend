@@ -4,6 +4,7 @@ export const createPost = async (req, res) => {
   try {
     const post = new Post({
       content: req.body.content,
+      mediaUrl: req.file ? `/uploads/${req.file.filename}` : null,
       author: req.user.id,
     })
     await post.save()
@@ -16,7 +17,7 @@ export const createPost = async (req, res) => {
 export const getAllPosts = async (req, res) => {
   try {
     const posts = await Post.find()
-      .populate("author", "username email")
+      .populate("author", "username email imageUrl")
       .sort({ createdAt: -1 })
     res.json(posts)
   } catch (error) {
