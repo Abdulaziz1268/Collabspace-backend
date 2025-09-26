@@ -7,6 +7,7 @@ import path from "path"
 import authRoutes from "./Routes/auth.js"
 import userRoutes from "./Routes/user.js"
 import postRoutes from "./Routes/Post.js"
+import taskRoutes from "./Routes/Task.js"
 
 import connectDB from "./Config/db.js"
 
@@ -29,6 +30,7 @@ app.use(
 app.use("/api/auth", authRoutes)
 app.use("/api/user", userRoutes)
 app.use("/api/post", postRoutes)
+app.use("/api/task", taskRoutes)
 
 app.get("/", (req, res) => {
   res.status(200).json({ status: "server is now live!" })
