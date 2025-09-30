@@ -43,7 +43,7 @@ export const updateTask = async (req, res) => {
     const task = await Task.findOneAndUpdate(
       { _id: taskId, user: userId },
       req.body,
-      { new: true }
+      { new: true, runValidators: true }
     )
 
     if (!task)
