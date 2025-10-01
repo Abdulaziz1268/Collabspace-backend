@@ -5,9 +5,10 @@ import { fileURLToPath } from "url"
 import path from "path"
 
 import authRoutes from "./Routes/auth.js"
-import userRoutes from "./Routes/user.js"
+import commentRoutes from "./Routes/Comment.js"
 import postRoutes from "./Routes/Post.js"
 import taskRoutes from "./Routes/Task.js"
+import userRoutes from "./Routes/user.js"
 
 import connectDB from "./Config/db.js"
 
@@ -28,9 +29,10 @@ app.use(
 )
 
 app.use("/api/auth", authRoutes)
-app.use("/api/user", userRoutes)
+app.use("/api/comment", commentRoutes)
 app.use("/api/post", postRoutes)
 app.use("/api/task", taskRoutes)
+app.use("/api/user", userRoutes)
 
 app.get("/", (req, res) => {
   res.status(200).json({ status: "server is now live!" })
