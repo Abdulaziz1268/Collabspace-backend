@@ -21,7 +21,8 @@ export const getAllPosts = async (req, res) => {
       .sort({ createdAt: -1 })
     res.json(posts)
   } catch (error) {
-    res.status(500).json({ message: error.message })
+    console.log(error.message)
+    res.status(500).json({ error: error.message || "Server Error." })
   }
 }
 
