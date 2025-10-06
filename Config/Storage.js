@@ -19,7 +19,20 @@ const upload = multer({
     ) {
       cb(null, true)
     } else {
-      cb(new Error("Invalid file type. Only PDF and image files are allowed."))
+      cb(
+        new Error("Invalid file type. Only Video and image files are allowed.")
+      )
+    }
+  },
+})
+
+export const avatarUpload = multer({
+  storage: storage,
+  fileFilter: function (req, file, cb) {
+    if (file.mimetype.startsWith("image/")) {
+      cb(null, true)
+    } else {
+      cb(new Error("Invalid file type. Only image file is allowed."))
     }
   },
 })
